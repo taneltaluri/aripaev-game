@@ -1,0 +1,27 @@
+# Built plugin archive
+*.plugin
+*.zip
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# User data (personal trading state)
+trade_memory.md
+daily_log.md
+sandbox_portfell.xlsx
+portfelli_analyys_*.md
+nadala_swing_trade_*.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp

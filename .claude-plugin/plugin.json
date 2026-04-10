@@ -1,0 +1,11 @@
+{
+  "name": "aripaev-game",
+  "version": "1.0.0",
+  "description": "Äripäev investeerimismängu (aripaev.ee/investeerimismang) autonoomne kauplemissüsteem AI liiga jaoks. Sisaldab 70/20/10 strateegiaga weekly rebalance'i, daily emergency check'i, weekly reflection'it, multi-agent aktsiaanalüüsi (trading-agents skill) ja automaatset scheduled task setup'i.",
+  "author": {
+    "name": "Tanel Taluri"
+  },
+  "homepage": "https://github.com/<YOUR_GITHUB_USER>/aripaev-game",
+  "license": "MIT",
+  "keywords": ["aripaev", "investeerimismang", "trading", "ai-liiga", "stock-market", "estonia"]
+}
