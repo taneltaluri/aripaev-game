@@ -52,4 +52,17 @@ Samm-sammult:
    - Kogu navigeerimine käib portfelli **nime** järgi, seega kui sa nimetad portfelli aripaev.ee-s ümber, peab ka scheduled taskides olevad `<PORTFOLIO_NAME>` väärtused uuendama
    - Täida `trade_memory.md` algne positsioon ja strateegia käsitsi või lase esimesel rebalance'il see teha
 
+9.5. **SOOVITUS — jooksuta kõik tasks kohe "Run Now" abil**, et süsteem kohe bootstrap'iks ega peaks ootama esimese esmaspäevani:
+
+   - Mine Claude Desktop → Settings → Scheduled Tasks
+   - Leia `aripaev-weekly-rebalance` → kliki **"Run Now"** — see teeb esimese täieliku portfelli analüüsi ja rebalance'i, täidab `trade_memory.md` algse positsiooni ja strateegia
+   - Seejärel kliki `aripaev-daily-check` → **"Run Now"** — see kinnitab, et daily monitoring loogika töötab
+   - Lõpuks `aripaev-weekly-reflection` → **"Run Now"** — genereerib esimese reflektsiooni (kuigi see on parim pärast nädalat andmeid)
+
+   **Miks kohe jooksutada:**
+   - Bootstrap `trade_memory.md` päriselt esimese positsiooniga, mitte tühjalt
+   - Kontrollid, et Chrome MCP on sisse logitud ja navigatsioon nime järgi töötab
+   - Tuvastad vead kohe (nt vale portfelli nimi, Chrome sessioon aegunud), mitte esmaspäeva hommikul kui pole aega parandada
+   - Saad esimese rebalance'i kohe käima ja ei kaota nädalat
+
 10. **Väljasta kokkuvõte** — Äripäev kasutajanimi + portfelli nimi + AI liiga staatus + loodud tasks + nende järgmised käivitused + stock trader kausta asukoht.

@@ -134,7 +134,23 @@ Edasi skript automaatselt:
 - Loob **3 scheduled task'i** sinu arvutis (asendades placeholder'id sinu andmetega)
 - Loob vajalikud failid stock trader kausta
 
-Valmis! Järgmisest esmaspäevast alates mängib Claude AI liigas sinu eest.
+### 🚀 Soovituslik: jooksuta tasks kohe "Run Now" abil
+
+**Ära oota esmaspäevani** — käivita kõik 3 scheduled task'i kohe peale setup'i, et süsteem bootstrap'iks õigesti:
+
+1. Ava **Claude Desktop** → **Settings** → **Scheduled Tasks**
+2. Leia `aripaev-weekly-rebalance` → kliki **"Run Now"** — esimene täielik analüüs + rebalance, täidab `trade_memory.md` algpositsiooniga
+3. Seejärel `aripaev-daily-check` → **"Run Now"** — kontrollib, et monitooringu loogika töötab
+4. Lõpuks `aripaev-weekly-reflection` → **"Run Now"** — esimene reflektsioon
+
+**Miks kohe jooksutada:**
+
+- **Bootstrap** — `trade_memory.md` saab päriselt esimese positsiooni ja strateegia, mitte tühjalt
+- **Valideerimine** — kontrollid kohe, et Chrome MCP sessioon on OK, portfelli nimi vastab, AI liigaga liitumine õnnestus
+- **Varajane veatuvastus** — kui midagi on valesti (nt vale portfelli nimi), avastad selle kohe, mitte esmaspäeva hommikul kell 9:05 kui order'eid hakatakse täitma
+- **Ajavõit** — esimene nädal ei lähe kaduma, saad rebalance'i kohe käima
+
+Pärast seda jätkavad tasks automaatselt oma cron'i järgi (E 9:05, iga päev 18:09, R 18:06 EET).
 
 > ⚠️ **Oluline**: Chrome MCP vajab, et oleksid aripaev.ee-sse **sisse logitud** selles Chrome'i sessioonis, kus MCP extension jookseb. Pea see sessioon avatuna, et scheduled taskid saaksid ise tellimusi esitada.
 
