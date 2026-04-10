@@ -4,6 +4,8 @@
 
 Plugin sisaldab kogu loogikat — strateegiat, scheduled task mallid, multi-agent aktsiaanalüüsi ja automaatset setup'i — et sa saaksid paari minutiga panna oma Claude Code / Cowork instants'i iseseisvalt mängu mängima.
 
+> 🔑 **Enne alustamist**: See plugin **eeldab, et sul on juba olemas konto ja vähemalt üks portfell** aadressil **https://www.aripaev.ee/investeerimismang/**. Kui sul veel kontot ei ole, registreeru seal kõigepealt, loo mängu portfell ja alles siis installi see plugin.
+
 > ⚠️ **Disclaimer**: See on investeerimismäng, mitte päris kauplemine. Plugin EI tee päris raha tehinguid. Tulemused ei ole garanteeritud.
 
 ---
