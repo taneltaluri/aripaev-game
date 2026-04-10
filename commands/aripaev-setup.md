@@ -7,16 +7,18 @@ Sa oled aripaev-game plugina setup skript. Ülesanne: seadistada kasutaja arvuti
 Samm-sammult:
 
 1. **Küsi kasutajalt** `AskUserQuestion` abil:
-   - Äripäev mängu portfelli ID (leitav aripaev.ee/investeerimismang URL-ist pärast sisselogimist)
-   - Stock trader kaust kus hoitakse `trade_memory.md` ja `daily_log.md` (vaikimisi Windows: `C:\Users\<USER>\OneDrive\Documents\Claude\Projects\stock trader`)
-   - Kas tasks peavad algul enabled olema või kõigepealt disabled (et kasutaja saaks üle vaadata)
+   - **Äripäev kasutajanimi** (sama millega logid sisse aripaev.ee-sse)
+   - **Portfelli nimi** (sinu mängu portfelli nimi — nt "Tanel AI", "Minu AI bot")
+   - **Stock trader kaust** kus hoitakse `trade_memory.md` ja `daily_log.md` (vaikimisi Windows: `C:\Users\<USER>\OneDrive\Documents\Claude\Projects\stock trader`)
+   - Kas tasks peavad algul **enabled** olema või kõigepealt **disabled** (et kasutaja saaks üle vaadata)
 
 2. **Kontrolli, et Claude in Chrome MCP on saadaval**. Kui ei ole, lõpeta setup ja ütle kasutajale, et see on eeltingimus.
 
 3. **Ava aripaev.ee Chrome MCP kaudu**:
    - Navigeeri `https://www.aripaev.ee/investeerimismang/`
-   - Veendu, et kasutaja on sisse logitud (kui ei, küsi kasutajalt käsitsi sisse logida ja oota)
-   - **Liitu AI liigaga**: Mine Liigad → AI liiga → kui nähtav "Liitu liigaga" / "Registreeri portfell" nupp, kliki seda ja vali antud portfelli ID. Kinnita liitumine.
+   - Veendu, et kasutaja on sisse logitud antud **kasutajanimega**. Kui ei, küsi kasutajalt käsitsi sisse logida ja oota.
+   - **Leia kasutaja portfell nime järgi** — mine "Minu portfellid" / "Portfellid" lehele ja otsi nimekirjast **portfelli nimi** mille kasutaja andis. Loe portfelli ID URL-ist (`?portfell=XXXX`) ja jäta meelde.
+   - **Liitu AI liigaga**: Mine Liigad → AI liiga → kui nähtav "Liitu liigaga" / "Registreeri portfell" nupp, kliki seda ja vali antud portfelli (nime järgi). Kinnita liitumine.
    - Verifitseeri, et portfell on nüüd AI liiga edetabelis nähtav.
 
 4. **Loe kõik 3 scheduled task malli** selle plugina kaustast `scheduled-tasks/`:
@@ -27,7 +29,9 @@ Samm-sammult:
    Iga fail sisaldab YAML frontmatter'it (taskId, description, cronExpression) ja prompt'i sisu pärast frontmatter'it.
 
 5. **Asenda placeholder'id** prompti sisus:
-   - `<PORTFOLIO_ID>` → kasutaja antud portfelli ID
+   - `<PORTFOLIO_ID>` → URL-ist loetud portfelli ID (sammust 3)
+   - `<PORTFOLIO_NAME>` → kasutaja antud portfelli nimi
+   - `<ARIPAEV_USERNAME>` → kasutaja antud Äripäev kasutajanimi
    - `<STOCK_TRADER_DIR>` → kasutaja antud stock trader kaust
    - `<POSITION_PLACEHOLDER ...>` → praegune portfelli positsioon aripaev.ee-st (loe Chrome MCP-ga), formaadis "TICKER 25%, TICKER 20%, ..."
 
@@ -43,7 +47,7 @@ Samm-sammult:
    - Weekly rebalance käib esmaspäeviti 9:05 EET (enne 10:00 order-täitumist)
    - Daily check käib igal päeval 18:09 EET
    - Weekly reflection käib reedeti 18:06 EET
-   - Scheduled task jookseb Chrome'i sessiooni all — pea aripaev.ee sessioon sisse loginuks
+   - Scheduled task jookseb Chrome'i sessiooni all — pea aripaev.ee sessioon **kasutajanimega "<ARIPAEV_USERNAME>"** sisse loginuks
    - Täida `trade_memory.md` algne positsioon ja strateegia käsitsi või lase esimesel rebalance'il see teha
 
-10. **Väljasta kokkuvõte** — AI liiga staatus + loodud tasks + nende järgmised käivitused + stock trader kausta asukoht.
+10. **Väljasta kokkuvõte** — Äripäev kasutajanimi + portfelli nimi + AI liiga staatus + loodud tasks + nende järgmised käivitused + stock trader kausta asukoht.

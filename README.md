@@ -23,7 +23,7 @@ Plugin sisaldab kogu loogikat — strateegiat, scheduled task mallid, multi-agen
 
 **Commands (`commands/`):**
 
-- **`/aripaev-setup`** — ühe klikiga setup. Liitub AI liigaga, loob 3 scheduled task'i, küsib portfelli ID, seadistab kliendi kausta.
+- **`/aripaev-setup`** — ühe klikiga setup. Küsib Äripäev kasutajanime ja portfelli nime, liitub AI liigaga, loob 3 scheduled task'i, seadistab kliendi kausta.
 
 **Scheduled task mallid (`scheduled-tasks/`):**
 
@@ -38,60 +38,99 @@ Plugin sisaldab kogu loogikat — strateegiat, scheduled task mallid, multi-agen
 ## Eeltingimused
 
 1. **Claude Code** või **Cowork** Claude desktop'is
-2. **Claude in Chrome MCP** extension (vajalik aripaev.ee-ga suhtlemiseks)
+2. **Claude in Chrome MCP** extension (vajalik aripaev.ee-ga suhtlemiseks) — [installijuhend](https://www.anthropic.com/news/claude-for-chrome)
 3. **scheduled-tasks MCP** (Claude Code'is vaikimisi olemas)
 4. **Python 3** + `yfinance pandas stockstats openpyxl` (trading-agents skilli jaoks):
    ```bash
    pip install yfinance pandas stockstats openpyxl --break-system-packages
    ```
-5. **Konto aripaev.ee investeerimismängus** (https://www.aripaev.ee/investeerimismang/)
+5. **Konto aripaev.ee investeerimismängus** (https://www.aripaev.ee/investeerimismang/) ja vähemalt üks loodud portfell
 
 ---
 
 ## Installimine
 
-### Variant 1: GitHub (soovitatud)
+Vali endale sobiv variant. **Variant 2 (zip allalaadimine)** on kõige lihtsam kui sa pole git-iga sõber.
 
-```bash
-git clone https://github.com/taneltaluri/aripaev-game.git ~/.claude/plugins/aripaev-game
-```
+### Variant 1: Claude Code plugin install (kõige kiirem)
 
-Või kui kasutad Claude Code plugin manager'it:
+Claude Code / Cowork vestluses kirjuta:
 
 ```
 /plugin install github:taneltaluri/aripaev-game
 ```
 
-### Variant 2: `.plugin` fail
+See laeb plugina automaatselt alla ja installib. Edasi mine [Esmane seadistamine](#esmane-seadistamine) juurde.
 
-1. Lae alla `aripaev-game.plugin` release'ist
-2. Ava Claude Code / Cowork → Settings → Plugins → Install from file
-3. Vali allalaetud `.plugin` fail
+### Variant 2: Lae alla ZIP fail ja drag-drop Claude Desktop'i 🖱️
 
-### Variant 3: Käsitsi
+**Samm 1 — lae plugin alla:**
 
-Kopeeri kogu `aripaev-game/` kaust oma Claude skillide / pluginate kausta.
+1. Mine releases lehele: **https://github.com/taneltaluri/aripaev-game/releases/latest**
+2. Otsi üles "Assets" sektsioon kerides allapoole
+3. Kliki failil **`aripaev-game.plugin`** (või `aripaev-game-v2.plugin`) — see laeb alla `Downloads` kausta
+4. **Alternatiivselt** kogu repo ZIP-ina: kliki ülal rohelisel **"Code" → "Download ZIP"** nupul repo pealehel https://github.com/taneltaluri/aripaev-game
+
+**Samm 2 — installi Claude Desktop'i:**
+
+1. **Ava Claude Desktop rakendus** (mitte brauser — päris app)
+2. Ava File Explorer ja leia allalaetud `aripaev-game.plugin` fail (tavaliselt `C:\Users\<sinu_nimi>\Downloads\`)
+3. **Haara hiirega failist kinni** (vasak nupp all) ja **lohista see Claude Desktop aknasse** (ükskõik millise avatud vestluse peale)
+4. Lase nupp lahti — Claude Desktop tunneb `.plugin` faili ära ja kuvab installi dialoogi
+5. Kliki **"Install"** kinnituseks
+
+**Kui drag-drop ei tööta:**
+
+1. Claude Desktop → Settings (⚙️) → **Plugins**
+2. Kliki **"Install from file"** nuppu
+3. Navigeeri allalaetud `.plugin` faili juurde ja vali see
+
+**Kui laadisid alla ZIP faili kogu repost:**
+
+1. Paki ZIP lahti (paremklikk → "Extract All...")
+2. Kopeeri `aripaev-game-main` kaust siia: `C:\Users\<sinu_nimi>\.claude\plugins\aripaev-game` (loo `.claude\plugins` kaust kui pole)
+3. Taaskäivita Claude Desktop
+
+### Variant 3: Git clone (arendajatele)
+
+```bash
+git clone https://github.com/taneltaluri/aripaev-game.git ~/.claude/plugins/aripaev-game
+```
+
+Windows PowerShell:
+```powershell
+git clone https://github.com/taneltaluri/aripaev-game.git "$env:USERPROFILE\.claude\plugins\aripaev-game"
+```
 
 ---
 
 ## Esmane seadistamine
 
-Pärast installimist käivita vestluses:
+Pärast installimist käivita Claude Code / Cowork vestluses:
 
 ```
 /aripaev-setup
 ```
 
-Setup skript:
+Setup skript küsib sinult:
 
-1. Küsib sinu **portfelli ID** (vaata aripaev.ee URL-ist pärast sisselogimist: `?portfell=XXXX`)
-2. Küsib **stock trader kausta** asukohta (kus hoitakse `trade_memory.md` ja `daily_log.md`)
-3. Avab Chrome MCP-ga aripaev.ee, **liitub AI liigaga** automaatselt
-4. Loeb praeguse portfelli positsiooni
-5. Loob **3 scheduled task'i** sinu arvutis (asendades placeholder'id sinu andmetega)
-6. Loob vajalikud failid kliendi kausta
+1. **Äripäev kasutajanimi** — sama millega logid sisse aripaev.ee-sse
+2. **Portfelli nimi** — sinu mängu portfelli nimi (nt "Minu AI bot")
+3. **Stock trader kaust** — kus hoitakse `trade_memory.md` ja `daily_log.md` (vaikimisi Windows: `C:\Users\<sinu_nimi>\OneDrive\Documents\Claude\Projects\stock trader`)
+4. Kas tasks peavad algul **enabled** või **disabled** olema
+
+Edasi skript automaatselt:
+
+- Avab Chrome MCP-ga aripaev.ee
+- Leiab sinu portfelli nime järgi nimekirjast
+- **Liitub AI liigaga** sinu portfelliga
+- Loeb praeguse positsiooni
+- Loob **3 scheduled task'i** sinu arvutis (asendades placeholder'id sinu andmetega)
+- Loob vajalikud failid stock trader kausta
 
 Valmis! Järgmisest esmaspäevast alates mängib Claude AI liigas sinu eest.
+
+> ⚠️ **Oluline**: Chrome MCP vajab, et oleksid aripaev.ee-sse **sisse logitud** selles Chrome'i sessioonis, kus MCP extension jookseb. Pea see sessioon avatuna, et scheduled taskid saaksid ise tellimusi esitada.
 
 ---
 
@@ -133,6 +172,22 @@ aripaev-game/
 ├── LICENSE
 └── .gitignore
 ```
+
+---
+
+## Probleemide lahendamine
+
+**"Plugin ei ilmu Claude Desktop'i peale installi"**
+Taaskäivita Claude Desktop (sulge kõik aknad, ava uuesti).
+
+**"/aripaev-setup ei tööta"**
+Kontrolli, et sul on Claude in Chrome MCP extension installitud ja aripaev.ee avatud ning sisse logitud.
+
+**"Scheduled taskid ei käivitu"**
+Claude Desktop peab olema taustal käivitunud scheduled task'i ajal. Kontrolli ka, et aripaev.ee sessioon on aktiivne.
+
+**"Portfelli ei leitud nime järgi"**
+Veendu, et kasutad täpselt sama nime mis aripaev.ee-s. Tühikud ja suurtähed loevad.
 
 ---
 
