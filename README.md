@@ -62,34 +62,40 @@ Claude Code / Cowork vestluses kirjuta:
 
 See laeb plugina automaatselt alla ja installib. Edasi mine [Esmane seadistamine](#esmane-seadistamine) juurde.
 
-### Variant 2: Lae alla ZIP fail ja drag-drop Claude Desktop'i 🖱️
+### Variant 2: Lae alla ZIP fail ja lisa Claude Desktop Plugins alla 📦
 
-**Samm 1 — lae plugin alla:**
+**Samm 1 — lae plugin ZIP-ina alla GitHubist:**
 
-1. Mine releases lehele: **https://github.com/taneltaluri/aripaev-game/releases/latest**
-2. Otsi üles "Assets" sektsioon kerides allapoole
-3. Kliki failil **`aripaev-game.plugin`** (või `aripaev-game-v2.plugin`) — see laeb alla `Downloads` kausta
-4. **Alternatiivselt** kogu repo ZIP-ina: kliki ülal rohelisel **"Code" → "Download ZIP"** nupul repo pealehel https://github.com/taneltaluri/aripaev-game
+1. Mine repo pealehele: **https://github.com/taneltaluri/aripaev-game**
+2. Kliki ülevalt roheline **"Code"** nupp
+3. Rippmenüüst vali **"Download ZIP"**
+4. Fail `aripaev-game-main.zip` salvestub `Downloads` kausta
 
-**Samm 2 — installi Claude Desktop'i:**
+**Alternatiiv:** kui eelistad valmis-pakitud `.plugin` faili, mine https://github.com/taneltaluri/aripaev-game/releases/latest ja lae "Assets" sektsiooni alt alla `aripaev-game.plugin` fail.
 
-1. **Ava Claude Desktop rakendus** (mitte brauser — päris app)
-2. Ava File Explorer ja leia allalaetud `aripaev-game.plugin` fail (tavaliselt `C:\Users\<sinu_nimi>\Downloads\`)
-3. **Haara hiirega failist kinni** (vasak nupp all) ja **lohista see Claude Desktop aknasse** (ükskõik millise avatud vestluse peale)
-4. Lase nupp lahti — Claude Desktop tunneb `.plugin` faili ära ja kuvab installi dialoogi
-5. Kliki **"Install"** kinnituseks
+**Samm 2 — paki ZIP lahti** (ainult kui laadisid ZIP-i, mitte `.plugin` faili):
 
-**Kui drag-drop ei tööta:**
+1. Ava File Explorer ja leia `aripaev-game-main.zip` `Downloads` kaustas
+2. Tee paremklikk failil → **"Extract All..."** → "Extract"
+3. Sa saad kausta nimega `aripaev-game-main` — sees peaks olema `.claude-plugin`, `skills`, `commands`, `scheduled-tasks` alamkaustad
 
-1. Claude Desktop → Settings (⚙️) → **Plugins**
-2. Kliki **"Install from file"** nuppu
-3. Navigeeri allalaetud `.plugin` faili juurde ja vali see
+**Samm 3 — lisa plugin Claude Desktop'i:**
 
-**Kui laadisid alla ZIP faili kogu repost:**
+1. **Ava Claude Desktop rakendus** (mitte brauserit — päris app)
+2. Mine **Settings** (hammasratas ikoon ⚙️ all vasakus nurgas või File menüüst)
+3. Vali vasakust menüüst **"Plugins"** (või "Extensions" olenevalt versioonist)
+4. Kliki **"Install from file"** või **"Add plugin"** nupule
+5. Navigeeri lahti pakitud `aripaev-game-main` kausta juurde (või otse `.plugin` faili juurde kui laadisid Release'ist)
+6. Vali see ja kliki **"Open"** / **"Install"**
+7. Claude Desktop kuvab kinnituse — kliki **"Install"** / **"Enable"**
 
-1. Paki ZIP lahti (paremklikk → "Extract All...")
-2. Kopeeri `aripaev-game-main` kaust siia: `C:\Users\<sinu_nimi>\.claude\plugins\aripaev-game` (loo `.claude\plugins` kaust kui pole)
-3. Taaskäivita Claude Desktop
+**Samm 4 — taaskäivita Claude Desktop:**
+
+Sulge Claude Desktop täielikult (kontrolli ka system tray'd, et app pole taustal) ja ava uuesti. Plugin peaks nüüd olema aktiivne.
+
+**Samm 5 — kontrolli, et plugin töötab:**
+
+Ava suvaline vestlus ja kirjuta `/aripaev-setup` — kui slash-käsk ilmub autocomplete'i, siis installimine õnnestus. Käivita see ja järgi juhiseid.
 
 ### Variant 3: Git clone (arendajatele)
 

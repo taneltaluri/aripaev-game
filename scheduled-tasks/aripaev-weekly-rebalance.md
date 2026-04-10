@@ -8,7 +8,7 @@ Käivita aripaev-trader weekly rebalance protokoll — TÄIELIKULT AUTONOOMSELT.
 
 Kontekst:
 - Mäng: https://www.aripaev.ee/investeerimismang/ (Äripäev/Swedbank)
-- Portfell ID: <PORTFOLIO_ID>, rebalanss URL: https://www.aripaev.ee/investeerimismang/rebalansseeri?portfell=<PORTFOLIO_ID>
+- Portfelli nimi: "<PORTFOLIO_NAME>", rebalanss URL: https://www.aripaev.ee/investeerimismang/ (leia "Minu portfellid" alt portfell nimega "<PORTFOLIO_NAME>" ja ava see)
 - Liiga: AI liiga (peamine), SEB liiga (sekundaarne)
 - Praegune positsioon (viimati salvestatud): <POSITION_PLACEHOLDER — setup täidab esimese jooksu ajal>
 - Orderid täituvad 10:00 EET — sul on ~1h aega analüüsiks ja tehingute teostamiseks enne seda

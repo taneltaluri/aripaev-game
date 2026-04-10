@@ -8,18 +8,20 @@ Samm-sammult:
 
 1. **Küsi kasutajalt** `AskUserQuestion` abil:
    - **Äripäev kasutajanimi** (sama millega logid sisse aripaev.ee-sse)
-   - **Portfelli nimi** (sinu mängu portfelli nimi — nt "Tanel AI", "Minu AI bot")
+   - **Portfelli nimi** — sinu mängu portfelli **täpne nimi** nii nagu see on kirjas aripaev.ee "Minu portfellid" lehel (nt "Minu AI bot"). Tühikud ja suurtähed loevad.
    - **Stock trader kaust** kus hoitakse `trade_memory.md` ja `daily_log.md` (vaikimisi Windows: `C:\Users\<USER>\OneDrive\Documents\Claude\Projects\stock trader`)
    - Kas tasks peavad algul **enabled** olema või kõigepealt **disabled** (et kasutaja saaks üle vaadata)
 
+   > ℹ️ **Miks mitte portfelli ID?** Äripäev mäng ei kuva portfelli ID-d kasutajale avalikult — ainult nimi on nähtav. Kogu automaatika töötab edaspidi nime põhjal (Chrome MCP navigeerib "Minu portfellid" lehele ja klikib õigel nimel).
+
 2. **Kontrolli, et Claude in Chrome MCP on saadaval**. Kui ei ole, lõpeta setup ja ütle kasutajale, et see on eeltingimus.
 
-3. **Ava aripaev.ee Chrome MCP kaudu**:
+3. **Ava aripaev.ee Chrome MCP kaudu ja kontrolli sisselogimist**:
    - Navigeeri `https://www.aripaev.ee/investeerimismang/`
    - Veendu, et kasutaja on sisse logitud antud **kasutajanimega**. Kui ei, küsi kasutajalt käsitsi sisse logida ja oota.
-   - **Leia kasutaja portfell nime järgi** — mine "Minu portfellid" / "Portfellid" lehele ja otsi nimekirjast **portfelli nimi** mille kasutaja andis. Loe portfelli ID URL-ist (`?portfell=XXXX`) ja jäta meelde.
-   - **Liitu AI liigaga**: Mine Liigad → AI liiga → kui nähtav "Liitu liigaga" / "Registreeri portfell" nupp, kliki seda ja vali antud portfelli (nime järgi). Kinnita liitumine.
-   - Verifitseeri, et portfell on nüüd AI liiga edetabelis nähtav.
+   - Mine **"Minu portfellid"** lehele ja kinnita, et kasutaja antud portfelli nimi `<PORTFOLIO_NAME>` on nimekirjas nähtav. Kui ei ole, lõpeta setup ja ütle kasutajale, et nimi peab täpselt vastama.
+   - **Liitu AI liigaga**: Mine Liigad → AI liiga → kui nähtav "Liitu liigaga" / "Registreeri portfell" nupp, kliki seda ja vali antud portfell **nime järgi** (mitte ID järgi). Kinnita liitumine.
+   - Verifitseeri, et portfell (nime järgi) on nüüd AI liiga edetabelis nähtav.
 
 4. **Loe kõik 3 scheduled task malli** selle plugina kaustast `scheduled-tasks/`:
    - `aripaev-weekly-rebalance.md`
@@ -29,11 +31,10 @@ Samm-sammult:
    Iga fail sisaldab YAML frontmatter'it (taskId, description, cronExpression) ja prompt'i sisu pärast frontmatter'it.
 
 5. **Asenda placeholder'id** prompti sisus:
-   - `<PORTFOLIO_ID>` → URL-ist loetud portfelli ID (sammust 3)
-   - `<PORTFOLIO_NAME>` → kasutaja antud portfelli nimi
+   - `<PORTFOLIO_NAME>` → kasutaja antud portfelli nimi (täpselt nii nagu sisestatud)
    - `<ARIPAEV_USERNAME>` → kasutaja antud Äripäev kasutajanimi
    - `<STOCK_TRADER_DIR>` → kasutaja antud stock trader kaust
-   - `<POSITION_PLACEHOLDER ...>` → praegune portfelli positsioon aripaev.ee-st (loe Chrome MCP-ga), formaadis "TICKER 25%, TICKER 20%, ..."
+   - `<POSITION_PLACEHOLDER ...>` → praegune portfelli positsioon aripaev.ee-st (loe Chrome MCP-ga, navigeerides "Minu portfellid" → klikkides portfelli nimel), formaadis "TICKER 25%, TICKER 20%, ..."
 
 6. **Loo tasks** `mcp__scheduled-tasks__create_scheduled_task` tool'iga:
    - taskId, description, cronExpression frontmatter'ist
@@ -47,7 +48,8 @@ Samm-sammult:
    - Weekly rebalance käib esmaspäeviti 9:05 EET (enne 10:00 order-täitumist)
    - Daily check käib igal päeval 18:09 EET
    - Weekly reflection käib reedeti 18:06 EET
-   - Scheduled task jookseb Chrome'i sessiooni all — pea aripaev.ee sessioon **kasutajanimega "<ARIPAEV_USERNAME>"** sisse loginuks
+   - Scheduled task jookseb Chrome'i sessiooni all — pea aripaev.ee sessioon kasutajanimega `<ARIPAEV_USERNAME>` sisse loginuks
+   - Kogu navigeerimine käib portfelli **nime** järgi, seega kui sa nimetad portfelli aripaev.ee-s ümber, peab ka scheduled taskides olevad `<PORTFOLIO_NAME>` väärtused uuendama
    - Täida `trade_memory.md` algne positsioon ja strateegia käsitsi või lase esimesel rebalance'il see teha
 
 10. **Väljasta kokkuvõte** — Äripäev kasutajanimi + portfelli nimi + AI liiga staatus + loodud tasks + nende järgmised käivitused + stock trader kausta asukoht.

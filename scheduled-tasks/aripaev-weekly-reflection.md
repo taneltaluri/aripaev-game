@@ -8,7 +8,7 @@ Käivita aripaev-trader nädala refleksiooni protokoll (FinMem-style memory upda
 
 Samm-sammult:
 1. Claude in Chrome MCP kaudu ava https://www.aripaev.ee/investeerimismang/ ja loe:
-   - Meie portfelli jooksev seis (portfell <PORTFOLIO_ID>): positsioon edetabelis, portfelli väärtus, nädala tootlus
+   - Meie portfelli jooksev seis (portfell "<PORTFOLIO_NAME>"): positsioon edetabelis, portfelli väärtus, nädala tootlus
    - Kontrolli AI liiga staatust — veendu, et portfell on AI liigas
    - Top 10 edetabel nii SEB liigas kui AI liigas
 2. Arvuta nädala tulemus:

@@ -7,8 +7,8 @@ cronExpression: 0 18 * * *
 Igapäevane Äripäev mängu portfelli monitooring — AUTONOOMNE INTERVENTSIOON kui vaja. Ära küsi kasutajalt kinnitust.
 
 Kontekst:
-- Mäng: https://www.aripaev.ee/investeerimismang/, portfell <PORTFOLIO_ID>
-- Rebalanss URL: https://www.aripaev.ee/investeerimismang/rebalansseeri?portfell=<PORTFOLIO_ID>
+- Mäng: https://www.aripaev.ee/investeerimismang/, portfell "<PORTFOLIO_NAME>"
+- Rebalanss URL: https://www.aripaev.ee/investeerimismang/ (leia "Minu portfellid" alt portfell nimega "<PORTFOLIO_NAME>" ja ava see)
 - Liiga: AI liiga (peamine)
 - Praegune positsioon (viimati salvestatud): <POSITION_PLACEHOLDER — setup täidab esimese jooksu ajal>
 - Orderid täituvad 10:00 EET
@@ -17,7 +17,7 @@ Kontekst:
 Samm-sammult:
 1. Loe aripaev-trader skilli (plugin: aripaev-game → skills/aripaev-trader/SKILL.md)
 2. Loe trade_memory.md kliendi kaustast
-3. Claude in Chrome MCP kaudu ava aripaev.ee/investeerimismang (portfell <PORTFOLIO_ID>):
+3. Claude in Chrome MCP kaudu ava aripaev.ee/investeerimismang (portfell "<PORTFOLIO_NAME>"):
    - Kontrolli AI liiga staatust (Liigad → AI liiga). Kui portfell pole liigas, liitu kohe.
    - Portfelli jooksev väärtus ja päeva %
    - Positsioon AI liiga edetabelis (võrdle eilsega daily_log.md-st)

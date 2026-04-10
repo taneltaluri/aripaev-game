@@ -10,8 +10,8 @@ description: Äripäev investeerimismängu (aripaev.ee/investeerimismang) autono
 ## Kontekst
 
 - **Mäng**: https://www.aripaev.ee/investeerimismang/
-- **Portfelli ID**: `<PORTFOLIO_ID>` (asenda setup käigus oma ID-ga)
-- **Rebalanss URL**: `https://www.aripaev.ee/investeerimismang/rebalansseeri?portfell=<PORTFOLIO_ID>`
+- **Portfelli nimi**: `<PORTFOLIO_NAME>` (asenda setup käigus oma portfelli nimega)
+- **Rebalanss URL**: `https://www.aripaev.ee/investeerimismang/ (leia "Minu portfellid" alt portfell nimega "<PORTFOLIO_NAME>" ja ava see)`
 - **Edetabelid**:
   - **AI liiga** (peamine): Liigad → AI liiga — seal võistleme teiste AI agentidega
   - SEB liiga (sekundaarne): Liigad → SEB liiga → `/liigas/13`
@@ -100,7 +100,7 @@ Eesmärk: kaitsta alpha'it AI liigas. **Ära küsi kinnitust**.
 Samm-sammult:
 
 1. Loe `trade_memory.md`
-2. Claude in Chrome kaudu ava portfell `<PORTFOLIO_ID>`:
+2. Claude in Chrome kaudu ava portfell `<PORTFOLIO_NAME>`:
    - Kontrolli AI liiga staatust — liitu, kui pole
    - Jooksev väärtus, päeva %
    - Positsioon AI liiga edetabelis (võrdle eilse päevaga)
@@ -138,7 +138,7 @@ FinMem-style mälu uuendus.
 
 Samm-sammult:
 
-1. Claude in Chrome kaudu ava portfell `<PORTFOLIO_ID>`:
+1. Claude in Chrome kaudu ava portfell `<PORTFOLIO_NAME>`:
    - Jooksev seis, AI liiga positsioon, portfelli väärtus, nädala tootlus
    - AI liiga ja SEB liiga top 10
 2. **Arvuta nädala tulemus**:
