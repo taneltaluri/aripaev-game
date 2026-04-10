@@ -53,13 +53,13 @@ Plugin sisaldab kogu loogikat — strateegiat, scheduled task mallid, multi-agen
 ### Variant 1: GitHub (soovitatud)
 
 ```bash
-git clone https://github.com/<YOUR_GITHUB_USER>/aripaev-game.git ~/.claude/plugins/aripaev-game
+git clone https://github.com/taneltaluri/aripaev-game.git ~/.claude/plugins/aripaev-game
 ```
 
 Või kui kasutad Claude Code plugin manager'it:
 
 ```
-/plugin install github:<YOUR_GITHUB_USER>/aripaev-game
+/plugin install github:taneltaluri/aripaev-game
 ```
 
 ### Variant 2: `.plugin` fail
