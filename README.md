@@ -136,19 +136,59 @@ Valmis! Järgmisest esmaspäevast alates mängib Claude AI liigas sinu eest.
 
 ## Strateegia põhimõtted
 
-**Miks 70/20/10, mitte lihtsalt top-kopeerimine?**
+Plugin jagab portfelli kolme allokatsiooni: **70% agent-analüüs**, **20% winner-kopeerimine**, **10% Trump alpha**. Need ei ole juhuslikud numbrid — iga tükk põhineb erineval info-eelisel mis teistel mängijatel tõenäoliselt puudub.
 
-Winner-kopeerimine paneb sind alati 1 sammu maha — sa ostad siis, kui nemad on juba ostnud. Agentide iseseisev analüüs annab edumaa: reageerid turule enne, kui teised mängijad edetabelit kopeerima hakkavad.
+### 70% — meie agentide iseseisev analüüs
 
-**Miks Trump alpha?**
+See on portfelli selgroog ja tuleb otse `trading-agents` skillist. Iga nädal esmaspäeva hommikul (enne 10:00 order-täitumist) jooksutab weekly rebalance task terve multi-agent pipeline'i:
 
-Trumpi sõnavõtud liigutavad konkreetseid aktsiaid momentaanselt (tariifid, tehingud, ähvardused, positiivsed tveedid). Enamik mängijaid ei reageeri kiiresti. Kui signaal on selge, anna sellele 25% positsioon.
+1. **4 analüütikut paralleelselt** `yfinance` andmetel:
+   - **Market Analyst** — tehniline analüüs (RSI, MACD, MA crossovers, volume profile, support/resistance)
+   - **Fundamentals Analyst** — P/E, P/S, earnings growth, margins, insider activity, short interest
+   - **News Analyst** — viimase nädala uudiste sentiment, analyst upgrades/downgrades, guidance muudatused
+   - **Social Media Analyst** — Reddit/Twitter sentiment, WSB trending, unusual options activity
+2. **Bull vs Bear debate** — kaks agenti argumenteerivad iga kandidaadi kohta, teineteise väiteid ümber lükates
+3. **Risk manager debate** — konservatiivne vs agressiivne riskijuht vaidlevad position sizing'u üle
+4. **Portfolio manager** sünteesib kõik eelneva → lõplik kaalutud soovitus (ticker, % kaal, stop-loss, thesis)
 
-**Miks autonoomne (ilma kinnituseta)?**
+**Miks see töötab mängus:** enamik mängijaid kopeerib edetabelit või reageerib eilsetele uudistele. Meie agendid jooksevad enne turu avanemist ja võtavad positsiooni *enne* kui hilised kopeerijad reageerida jõuavad. See on 1-2 päeva edumaa iga nädal.
 
-Äripäev mäng on zero-sum. Iga tund kriitilise catalysti ajal loeb. Keskmine ei võida — julge sekkumine võidab.
+### 20% — edukate mängijate kopeerimine (winner-copying)
 
----
+Weekly rebalance task käib läbi **Äripäev mängu edetabeli top-10 portfellid** Chrome MCP kaudu (mäng näitab iga portfelli positsioone avalikult). Plugin otsib:
+
+- **Mis aktsiaid hoiavad top-5 mängijad, keda meie agendid veel ei soovitanud?** — need on kandidaadid 20% kopia-ämbrisse
+- **Milline mängija on kõige järjepidevalt tipus viimased 4+ nädalat?** — temalt kopeerime eelistatult (mitte ühekordsed edu-mängijad kes lihtsalt hot streak'il on)
+- **Millised positsioonid on top-mängijate vahel ühised?** — consensus picks saavad suurema kaalu (nt kui 4/5 top-mängijat hoiavad NVDA-d, siis NVDA on tugev signaal)
+
+**Oluline reegel:** me ei kopeeri pimesi. Kui meie agendid ütlesid konkreetse aktsia kohta Bear-case on tugev, siis me EI võta seda isegi kui top-mängijad hoiavad. Winner-copying täiendab agente, mitte ei asenda neid.
+
+**Miks mitte 50% või 100% kopeerimine?** Kopeerimine on alati lagging indicator — kui sa näed edetabelis, et keegi on 3. kohal tänu NVDA-le, siis NVDA ralli on juba toimunud. 20% annab kontakti "turu tarkusega" ilma et kaotaksid meie agentide edumaa.
+
+### 10% — Trump alpha (katalüsaator-reaktiivne ämber)
+
+See on kõige väiksem aga kõige kõrgema oodatava tootlusega tükk. Mõte: Trumpi sõnavõtud liigutavad konkreetseid aktsiaid **minutitega**, mitte päevadega. Daily check task (iga päev 18:09 EET) ja weekly rebalance skanneerivad:
+
+- **Truth Social ja X (Twitter) Trumpi postitused** — tariifid, tehingud, ettevõtte-spetsiifilised rünnakud/kiitused
+- **Executive orders ja presidendi avaldused** — Valge Maja pressiteated
+- **Sektori-level signaalid** — kui Trump ründab Hiinat → puuduta half-chip (Applied Materials, LRCX), kui kiidab Muski → TSLA long, kui ähvardab tariifidega autosid → GM/Ford short-kandidaadid
+
+**Kuidas signaal muundub positsiooniks:**
+- Selge single-stock signaal (nt "X company is a disaster") → kuni 10% short-positsioon (või cash)
+- Selge positive signaal (nt kohtumine CEO'ga, positive tweet) → kuni 10% long
+- Sektor-level signaal → 5% ETF positsioon (XLE, XLF, SOXX jne)
+- Ebamäärane signaal → jätame vahele, cash 10%
+
+**Miks see ämber eksisteerib:** enamik kauplejaid filtreerib Trumpi signaalid välja ("noise", "political"). Kuid Äripäev mängus on see puhas alpha — keegi teine ei reageeri kiiresti ja mäng on zero-sum. 10% kaaluga on ka halvimal juhul kaotus piiratud, aga heal juhul (2-3 korda nädalas) toob see üksi terve nädala tootluse.
+
+### Miks autonoomne (ilma kinnituseta)?
+
+Äripäev mäng on zero-sum — iga võidetud euro tuleb kelleltki teiselt ära. Kaks põhjust miks plugin käivitab tehingud ise, kinnitust küsimata:
+
+1. **Ajaline edumaa** — kui catalyst tuleb öösel või tööpäeval keskel ja sa ootad, kuni inimene kinnitab, siis signaali väärtus on juba kaotatud. Scheduled task jookseb kohe kui cron tingimus täidetud.
+2. **Psühholoogiline eelis** — inimesed kardavad väikese portfelliga agressiivseid liigutusi (25% ühte aktsiasse), aga mängus on just see julgus edu võti. Autonoomne süsteem järgib strateegiat distsiplineeritult, ilma et "äkki mitte" kahtlused sekkuks.
+
+**Riskitaju:** kuna mäng EI ole päris raha, on see turvaline kontekst autonoomiaks. Sama süsteem päris rahaga vajaks human-in-the-loop kinnitust.
 
 ## Kaust-struktuur
 
